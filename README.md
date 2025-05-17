@@ -1,21 +1,14 @@
 ## [Prior tokenization-based interactive segmentation with Vision Transformers]
-<p align="center">
-    <a href="https://paperswithcode.com/sota/interactive-segmentation-on-sbd?p=simpleclick-interactive-image-segmentation">
-        <img src="https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/simpleclick-interactive-image-segmentation/interactive-segmentation-on-sbd"/>
-    </a>
-</p>
+
 
 <p align="center">
-  <img src="./assets/modeloverview.pdf" alt="drawing", width="650"/>
+  <img src="./assets/modeloverview.jpg" alt="drawing", width="650"/>
 </p>
 
 <p align="center">
     <a href="https://opensource.org/licenses/MIT">
         <img src="https://img.shields.io/badge/License-MIT-yellow.svg"/>
     </a>
-    <a href="https://arxiv.org/pdf/2210.11006.pdf">
-        <img src="https://img.shields.io/badge/arXiv-2102.06583-b31b1b"/>
-    </a>    
 </p>
 
 ## Environment
@@ -23,9 +16,9 @@ Training and evaluation environment: Python3.8.8, PyTorch 1.11.0, Ubuntu 20.4, C
 ```
 pip3 install -r requirements.txt
 ```
-You can build a container with the configured environment using our [Dockerfiles](https://github.com/uncbiag/SimpleClick/tree/main/docker). 
+You can build a container with the configured environment using our [Dockerfiles](https://github.com/dzyha2011/PT-SimpleClick/tree/main/docker). 
 Our Dockerfiles only support CUDA 11.0/11.4/11.6. If you use different CUDA drivers, you need to modify the base image in the Dockerfile (This is annoying that you need a matched image in Dockerfile for your CUDA driver, otherwise the gpu doesn't work in the container. Any better solutions?).
-You also need to configue the paths to the datasets in [config.yml](https://github.com/uncbiag/SimpleClick/blob/main/config.yml) before training or testing.
+You also need to configue the paths to the datasets in [config.yml](https://github.com/dzyha2011/PT-SimpleClick/blob/main/config.yml) before training or testing.
 
 ## Demo
 <p align="center">
@@ -34,18 +27,18 @@ You also need to configue the paths to the datasets in [config.yml](https://gith
 
 An example script to run the demo. 
 ```
-python3 demo.py --checkpoint=./weights/simpleclick_models/cocolvis_vit_huge.pth --gpu 0
+python3 demo.py --checkpoint=./weights/pt-simpleclick_models/prior_tokenize_cross_attention_cl_large.pth --gpu 0
 ```
-Some test images can be found [here](https://github.com/uncbiag/SimpleClick/tree/main/assets/test_imgs).
+Some test images can be found [here](https://github.com/dzyha2011/PT-SimpleClick/tree/main/assets/test_imgs).
 
 ## Evaluation
-Before evaluation, please download the datasets and models, and then configure the path in [config.yml](https://github.com/uncbiag/SimpleClick/blob/main/config.yml).
+Before evaluation, please download the datasets and models, and then configure the path in [config.yml](https://github.com/dzyha2011/PT-SimpleClick/tree/main/config.yml).
 
-Use the following code to evaluate the huge model.
+Use the following code to evaluate the large model.
 ```
 python scripts/evaluate_model.py NoBRS \
 --gpu=0 \
---checkpoint=./weights/simpleclick_models/cocolvis_vit_huge.pth \
+--checkpoint=./weights/pt-simpleclick_models/prior_tokenize_cross_attention_cl_large.pth \
 --eval-mode=cvpr \
 --datasets=GrabCut,Berkeley,DAVIS,PascalVOC,SBD,COCO_MVal,ssTEM,BraTS,OAIZIB
 ```
@@ -55,13 +48,13 @@ Before training, please download the [MAE](https://github.com/facebookresearch/m
 
 Use the following code to train a huge model on C+L: 
 ```
-python train.py models/iter_mask/plainvit_huge448_cocolvis_itermask.py \
+python train.py models/iter_mask/plainvit_base448_cocolvis_itermask.py \
 --batch-size=32 \
 --ngpus=4
 ```
 
 ## Download 
-SimpleClick models: [Google Drive](https://drive.google.com/drive/folders/1qpK0gtAPkVMF7VC42UA9XF4xMWr5KJmL?usp=sharing)
+PT-SimpleClick models: [Google Drive](https://drive.google.com/file/d/1b0uV48HglmF22ktf-KaDzxyouZYvwF5v/view?usp=drive_link)
 
 BraTS dataset (369 cases): [Google Drive](https://drive.google.com/drive/folders/1B6y1nNBnWU09EhxvjaTdp1XGjc1T6wUk?usp=sharing) 
 
@@ -69,23 +62,20 @@ OAI-ZIB dataset (150 cases): [Google Drive](https://drive.google.com/drive/folde
 
 Other datasets: [RITM Github](https://github.com/saic-vul/ritm_interactive_segmentation)
 
-## Notes
-[03/11/2023] Add an xTiny model.
 
-[10/25/2022] Add docker files.
+## Origins
+- This project is a modified version of [SimpleClick](https://github.com/uncbiag/SimpleClick/) (MIT License).
 
-[10/02/2022] Release the main models. This repository is still under active development.
 
 ## License
-The code is released under the MIT License. It is a short, permissive software license. Basically, you can do whatever you want as long as you include the original copyright and license notice in any copy of the software/source. 
+The code is released under the MIT License. It is a short, permissive software license. Basically, you can do whatever you want as long as you include the original copyright and license notice in any copy of the software/source. Copyright (c) [2023] [Qin Liu/University of North Carolina at Chapel Hill]. Copyright (c) [2025] [Zongyuan Ding/Changzhou University]. 
 
 ## Citation
 ```bibtex
-@article{liu2022simpleclick,
-  title={SimpleClick: Interactive Image Segmentation with Simple Vision Transformers},
-  author={Liu, Qin and Xu, Zhenlin and Bertasius, Gedas and Niethammer, Marc},
-  journal={arXiv preprint arXiv:2210.11006},
-  year={2022}
+@article{ding4969882prior,
+  title={Prior Tokenization Based Interactive Segmentation With Vision Transformers},
+  author={Ding, Zongyuan and Wang, Boyu and Wang, Hongyuan and Tao, Wang},
+  journal={Available at SSRN 4969882}
 }
 ```
 ## Acknowledgement
